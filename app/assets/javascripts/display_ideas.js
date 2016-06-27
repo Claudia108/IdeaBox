@@ -1,6 +1,6 @@
 $(document).ready(function() {
   displayIdeas();
-  createIdea();
+  // createIdea();
 });
 
 
@@ -23,7 +23,7 @@ function printIdeas(response) {
 
     $('.ideas').append('<h2>' + title + '</h2>');
     $('.ideas').append('<p>' + body + '</p>');
-    $('.ideas').append('<p>What a ' + quality + ' idea!</p>');
+    $('.ideas').append('<p>What a <i>' + quality + '</i> idea!</p>');
   });
 }
 

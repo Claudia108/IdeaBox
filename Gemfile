@@ -38,11 +38,19 @@ group :development, :test do
   gem 'rspec-rails'
   gem 'capybara'
   gem "pry", :require => "pry"
+  gem 'launchy'
+  gem 'database_cleaner'
+  gem 'factory_girl_rails', '~> 4.0'
 end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'
+end
+
+group :test do
+  gem 'shoulda-matchers', '~> 3.1'
+  gem 'simplecov', require: false
 end
 
 gem 'rails_12factor', group: :production
