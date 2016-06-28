@@ -1,6 +1,6 @@
 $(document).ready(function() {
   displayIdeas();
-  // createIdea();
+  createSubmitEventOnForm();
 });
 
 
@@ -16,28 +16,46 @@ function displayIdeas() {
 }
 
 function printIdeas(response) {
-  response.forEach(function(singleIdea) {
-    var title = singleIdea.title;
-    var body = singleIdea.body;
-    var quality = singleIdea.quality;
-
-    $('.ideas').append('<h2>' + title + '</h2>');
-    $('.ideas').append('<p>' + body + '</p>');
-    $('.ideas').append('<p>What a <i>' + quality + '</i> idea!</p>');
+  response.forEach(function(idea) {
+    $('.list-group').append(renderIdea(idea));
   });
 }
 
+function renderIdea(idea) {
+  var title = idea.title;
+  var body = idea.body;
+  var quality = idea.quality;
+  var id = idea.id;
 
+  return '<li class="list-group-item">' +
+        '<h4 class="list-group-item-heading">' + title + '</h4>' +
+        '<p class="list-group-item-text">' + body + '</p>' +
+        '<p class="list-group-item-text">A <i>' + quality + '</i> idea!</p>' +
+        '<div class="btn btn-primary" id="upvote-idea">Upvote</div>' +
+        '<div class="btn btn-primary" id="downvote-idea">Downvote</div>' +
+        '<div class="btn btn-primary delete-idea" data-id="' + id + '">Delete</div>' +
+        '</li>';
+}
 
+  function createSubmitEventOnForm() {
+    $("#save-idea").on('submit', function(event) {
+      event.preventDefault();
 
-
-// function renderMap() {
-//   $.ajax({
-//     method: "GET",
-//     url: "/api/v1/sites.json",
-//     dataType: "JSON",
-//     success: function(response) {
-//       initMap(response);
-//     }
-//   });
-// }
+    var title = $('#IdeaTitle').val();
+    var body = $('#IdeaBody').val();
+      $.ajax({
+        method: "POST",
+        url: "/api/v1/ideas",
+        dataType: "JSON",
+        data: {
+          idea: {
+            title: title,
+            body: body
+          }
+        },
+        success: function(idea){
+          $('.ideas').prepend(renderIdea(idea));
+        }
+      });
+  });
+  }

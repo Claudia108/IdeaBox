@@ -1,0 +1,59 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/Users/claudia/Turing/4module/projects/IdeaBox/app/helpers/application_helper.rb": [
+        1,
+        null
+      ],
+      "/Users/claudia/Turing/4module/projects/IdeaBox/app/controllers/api/v1/ideas_controller.rb": [
+        1,
+        1,
+        3,
+        null,
+        null,
+        1,
+        0,
+        null,
+        null,
+        null,
+        1,
+        null,
+        1,
+        0,
+        null,
+        null,
+        null
+      ],
+      "/Users/claudia/Turing/4module/projects/IdeaBox/app/controllers/api/v1/api_controller.rb": [
+        1,
+        1,
+        1,
+        null
+      ],
+      "/Users/claudia/Turing/4module/projects/IdeaBox/app/controllers/application_controller.rb": [
+        1,
+        null,
+        null,
+        1,
+        null
+      ],
+      "/Users/claudia/Turing/4module/projects/IdeaBox/app/models/idea.rb": [
+        1,
+        1,
+        1,
+        null,
+        19,
+        1,
+        null,
+        null
+      ],
+      "/Users/claudia/Turing/4module/projects/IdeaBox/app/controllers/ideas_controller.rb": [
+        1,
+        1,
+        null,
+        null
+      ]
+    },
+    "timestamp": 1467144808
+  }
+}

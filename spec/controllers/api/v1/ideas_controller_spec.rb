@@ -1,18 +1,14 @@
 require 'rails_helper'
 
-describe "Ideas#index API", :js => true do
-  it "returns all ideas" do
+RSpec.describe Api::V1::IdeasController, type: :controller do
+  scenario "ideas#index" do
     create_list(:idea, 10)
     expect(Idea.count).to eq(10)
 
-    get "/api/v1/ideas"
-    json = JSON.parse(response.body)
+    get :index
 
-    expect(response).to be_success
+    ideas = JSON.parse(response.body)
 
-    expect(json.count).to eq(10)
-    # json.zip(Idea.newest_first).each do | json_idea, db_idea |
-    #   expect(json_idea[ "title"]).to eq(db_idea.title)
-    # end
+    expect(ideas.count).to eq(10)
   end
 end
