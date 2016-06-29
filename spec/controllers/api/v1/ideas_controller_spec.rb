@@ -2,19 +2,22 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::IdeasController, type: :controller do
   scenario "ideas#index" do
-    create_list(:idea, 10)
-    expect(Idea.count).to eq(10)
+    create_list(:idea, 5)
+    expect(Idea.count).to eq(5)
 
     get :index
 
     ideas = JSON.parse(response.body)
 
-    expect(ideas.count).to eq(10)
+    expect(ideas.count).to eq(5)
   end
 
   scenario "idea#create" do
     expect(Idea.count).to eq(0)
-    post :create, { idea: { title: "Idea title", body: "Idea body" }}
+    post :create, { idea: {
+                    title: "Idea title",
+                    body: "Idea body"
+                  }}
 
     idea = JSON.parse(response.body)
 
@@ -31,7 +34,6 @@ RSpec.describe Api::V1::IdeasController, type: :controller do
                      title: "New Title",
                      body: "New Description"
                     }}
-
     updated = JSON.parse(response.body)
     expect(updated["title"]).to eq("New Title")
     expect(updated["body"]).to eq("New Description")
@@ -39,15 +41,15 @@ RSpec.describe Api::V1::IdeasController, type: :controller do
   end
 
   scenario "idea#delete" do
-    idea1 = create(:idea)
+    idea = create(:idea)
 
     expect(Idea.count).to eq(1)
 
-    delete :destroy, { id: idea1.id }
+    delete :destroy, { id: idea.id }
 
-    idea = response.body
+    id = response.body
 
     expect(Idea.count).to eq(0)
-    expect(idea).to eq(idea1.id.to_s)
+    expect(id).to eq(idea.id.to_s)
   end
 end

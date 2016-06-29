@@ -8,22 +8,20 @@ class Api::V1::IdeasController < Api::V1::ApiController
   end
 
   def update
-    idea = Idea.find(params[:id])
-    if idea.save
-      render json: idea.update(idea_params)
+    render json: Idea.update(params[:id], idea_params)
     #  { response: 'success' }
-    else
-      render json: { response: 'failed' }
-    end
+    # else
+    #   render json: { response: 'failed' }
+    # end
   end
 
-   def update
-    if idea_params[:quality]
-      render json: Idea.update(params[:id], quality: idea_params[:quality].to_i)
-    else
-      render json: Idea.update(params[:id], idea_params)
-    end
-  end
+  #  def update
+  #   if idea_params[:quality]
+  #     render json: Idea.update(params[:id], quality: idea_params[:quality].to_i)
+  #   else
+  #     render json: Idea.update(params[:id], idea_params)
+  #   end
+  # end
 
   def destroy
     Idea.delete(params[:id])

@@ -1,6 +1,8 @@
 $(document).ready(function() {
   defineEvents();
   displayIdeas();
+  updateTitle();
+  updateBody();
 });
 
 function displayIdeas() {
@@ -43,8 +45,12 @@ function renderIdea(idea) {
   var id = idea.id;
 
   return '<li class="list-group-item" id="idea-' + id + '">' +
-        '<h4 class="list-group-item-heading" data-title-id="' + id + '">' + title + '</h4>' +
-        '<p class="list-group-item-text" data-body-id="' + id + '">' + body + '</p>' +
+        '<h4 class="list-group-item-heading">' +
+        '<div class="title" data-title-id="' + id + '">' + title +
+        '</div></h4>' +
+        '<h5 class="list-group-item-text">' +
+        '<div class="body" data-body-id="' + id + '">'+ body +
+        '</div></h5>' +
         '<p class="list-group-item-text">A <i>' + quality + '</i> idea!</p>' +
         '<div class="btn btn-primary" id="upvote-idea">Upvote</div>' +
         '<div class="btn btn-primary" id="downvote-idea">Downvote</div>' +
@@ -88,18 +94,32 @@ function deleteIdea(id) {
   });
 }
 
-function editTitle() {
-  $('#idea-body-show').on('click', function(event) {
-    $(this).setAttribute('contenteditable', true);
-      editContent(this, { body: $(this).text(), id: $(this).data('body-id')});
-
+function updateTitle() {
+  $('.list-group').on('click', '.title', function(event) {
+    $(this).attr('contenteditable', 'true');
+    $(this).on('blur keydown', function(event) {
+      if(event.type === "blur" || event.keyCode === 13) {
+        updateIdea({ title: $(this).text(), id: $(this).data('title-id')});
+      }
+    });
   });
 }
 
-function editIdea( updatedContent) {
+function updateBody() {
+  $('.list-group').on('click', '.body', function(event) {
+    $(this).attr('contenteditable', 'true');
+    $(this).on('blur keydown', function(event) {
+      if(event.type === "blur" || event.keyCode === 13) {
+        updateIdea( { body: $(this).text(), id: $(this).data('body-id')});
+      }
+    });
+  });
+}
+
+function updateIdea(updatedContent) {
   $.ajax({
-    method: "PACH",
-    url: '/api/v1/ideas/' + data.id,
+    method: "PATCH",
+    url: '/api/v1/ideas/' + updatedContent.id,
     dataType: "JSON",
     data: {
       idea: {
@@ -112,22 +132,3 @@ function editIdea( updatedContent) {
     }
   });
 }
-    // if (event.type === "blur" || event.type === keyCode 13) {
-    // }
-
-// function editBody() {
-//   $('#idea-body-show').on('blur keydown', function(event) {
-//     if (event.type === "blur" || event.type === keyCode 13) {
-//       editContent(this, { body: $(this).text(), id: $(this).data('body-id')});
-//     }
-//   });
-// }
-// edit/updateIdea
-// setAttribute("contenteditable"=false) to title and body
-// - on click: set to true
-// - on enter (keyCode 13): set to false
-
-// $('div').blur(function () {
-//     $(this).attr('contenteditable', false);
-// });
-// $('div[contenteditable="true"]').attr('contenteditable', false);
