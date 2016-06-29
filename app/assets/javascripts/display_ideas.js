@@ -18,6 +18,7 @@ function defineEvents() {
   $("#save-idea").on('submit', function(event) {
     event.preventDefault();
     createIdea();
+    clearFields();
   });
 
   $(document).on('click', ".delete-idea", function() {
@@ -66,6 +67,12 @@ function createIdea() {
     }
   });
 }
+
+function clearFields() {
+  $('#IdeaTitle').val('');
+  $('#IdeaBody').val('');
+}
+
 
 function deleteIdea(id) {
   $.ajax({
