@@ -4,6 +4,7 @@ feature "user deletes idea", :js => true do
   scenario "they no longer see the idea on the page" do
     create_list(:idea, 3)
     idea = Idea.first
+
     visit '/'
 
     within("li:first-child") {

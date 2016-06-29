@@ -8,7 +8,7 @@
       "/Users/claudia/Turing/4module/projects/IdeaBox/app/controllers/api/v1/ideas_controller.rb": [
         1,
         1,
-        8,
+        10,
         null,
         null,
         1,
@@ -16,21 +16,13 @@
         null,
         null,
         1,
+        10,
+        7,
+        null,
         3,
         null,
         null,
         null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
         1,
         2,
         2,
@@ -40,7 +32,7 @@
         1,
         null,
         1,
-        5,
+        22,
         null,
         null,
         null
@@ -63,7 +55,7 @@
         1,
         1,
         null,
-        43,
+        55,
         1,
         null,
         null
@@ -75,6 +67,6 @@
         null
       ]
     },
-    "timestamp": 1467231670
+    "timestamp": 1467237336
   }
 }

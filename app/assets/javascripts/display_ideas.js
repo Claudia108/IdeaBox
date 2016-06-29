@@ -3,6 +3,8 @@ $(document).ready(function() {
   displayIdeas();
   updateTitle();
   updateBody();
+  upvoteQuality();
+  downvoteQuality();
 });
 
 function displayIdeas() {
@@ -52,8 +54,8 @@ function renderIdea(idea) {
         '<div class="body" data-body-id="' + id + '">'+ body +
         '</div></h5>' +
         '<p class="list-group-item-text">A <i>' + quality + '</i> idea!</p>' +
-        '<div class="btn btn-primary" id="upvote-idea">Upvote</div>' +
-        '<div class="btn btn-primary" id="downvote-idea">Downvote</div>' +
+        '<div class="btn btn-primary upvote" data-quality-id="' + id + '" data-quality="' + quality + '">Upvote</div>' +
+        '<div class="btn btn-primary downvote" data-quality-id="' + id + '" data-quality="' + quality + '">Downvote</div>' +
         '<button class="btn btn-primary delete-idea" data-id="' + id + '">Delete</button>' +
         '</li>';
 }
@@ -126,6 +128,59 @@ function updateIdea(updatedContent) {
         title: updatedContent.title,
         body: updatedContent.body
       }
+    },
+    success: function(data) {
+      $("#idea-" + data.id).replaceWith(renderIdea(data));
+    }
+  });
+}
+
+function upvoteQuality() {
+  $('.list-group').on('click', '.upvote', function(event) {
+    var ideaId = $(this).data('quality-id');
+    var currentQuality = $(this).data('quality');
+    var newQuality = upQuality(currentQuality);
+    updateQuality(ideaId, newQuality);
+  });
+}
+
+function upQuality(currentQuality) {
+  if (currentQuality === "swill") {
+    return 1;
+  } else if ( currentQuality === "plausible") {
+    return 2;
+  } else if ( currentQuality === "genius") {
+    return 2;
+  }
+}
+
+
+function downvoteQuality() {
+  $('.list-group').on('click', '.downvote', function(event) {
+    var ideaId = $(this).data('quality-id');
+    var currentQuality = $(this).data('quality');
+    var newQuality = downQuality(currentQuality);
+    updateQuality(ideaId, newQuality);
+  });
+}
+
+function downQuality(currentQuality) {
+  if (currentQuality === "swill") {
+    return 0;
+  } else if ( currentQuality === "plausible") {
+    return 0;
+  } else if ( currentQuality === "genius") {
+    return 1;
+  }
+}
+
+
+function updateQuality(ideaId, newQuality) {
+  $.ajax({
+    method: "PATCH",
+    url: '/api/v1/ideas/' + ideaId,
+    data: {
+      idea: {quality: newQuality }
     },
     success: function(data) {
       $("#idea-" + data.id).replaceWith(renderIdea(data));

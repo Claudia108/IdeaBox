@@ -27,17 +27,28 @@ RSpec.describe Api::V1::IdeasController, type: :controller do
 
   end
 
-  scenario "idea#update" do
+  scenario "idea#update_content" do
     idea = create(:idea)
 
     patch :update, { id: idea.id, idea: {
                      title: "New Title",
                      body: "New Description"
                     }}
-    updated = JSON.parse(response.body)
-    expect(updated["title"]).to eq("New Title")
-    expect(updated["body"]).to eq("New Description")
-    expect(updated["id"]).to eq(idea.id)
+    new_content = JSON.parse(response.body)
+
+    expect(new_content["title"]).to eq("New Title")
+    expect(new_content["body"]).to eq("New Description")
+    expect(new_content["id"]).to eq(idea.id)
+  end
+
+  scenario "idea#update_quality" do
+    idea = create(:idea)
+
+    patch :update, { id: idea.id, idea: { quality: 1 } }
+
+    new_content = JSON.parse(response.body)
+    expect(new_content["id"]).to eq(idea.id)
+    expect(new_content["quality"]).to eq("plausible")
   end
 
   scenario "idea#delete" do
