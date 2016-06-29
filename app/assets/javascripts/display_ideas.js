@@ -24,6 +24,10 @@ function defineEvents() {
   $(document).on('click', ".delete-idea", function() {
     deleteIdea($(this).data('id'));
   });
+
+  // $(document).on('click', function() {
+  //   updateIdea
+  // });
 }
 
 function printIdeas(response) {

@@ -31,15 +31,15 @@ RSpec.feature "user sees all ideas" do
     visit '/'
     wait_for_ajax
 
-    within('#idea-' + idea.id.to_s) {expect(page).to have_content(idea.title)}
-    within('#idea-' + idea.id.to_s) {expect(page).to have_content(idea.body)}
+    within('li:first-child') {expect(page).to have_content(idea.title)}
+    within('li:first-child') {expect(page).to have_content(idea.body)}
 
     new_idea = create(:idea)
 
     visit '/'
     wait_for_ajax
 
-    within('#idea-' + new_idea.id.to_s) { expect(page).to have_content(new_idea.title) }
-    within('#idea-' + new_idea.id.to_s) { expect(page).to have_content(new_idea.body) }
+    within('li:first-child') { expect(page).to have_content(new_idea.title) }
+    within('li:first-child') { expect(page).to have_content(new_idea.body) }
   end
 end
