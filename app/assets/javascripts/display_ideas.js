@@ -55,7 +55,6 @@ function renderIdea(idea) {
 function createIdea() {
   var title = $('#IdeaTitle').val();
   var body = $('#IdeaBody').val();
-
   $.ajax({
     method: "POST",
     url: "/api/v1/ideas",
@@ -91,21 +90,38 @@ function deleteIdea(id) {
 
 function editTitle() {
   $('#idea-body-show').on('click', function(event) {
-    $(this).setAttribute("contenteditable"=false);
+    $(this).setAttribute('contenteditable', true);
       editContent(this, { body: $(this).text(), id: $(this).data('body-id')});
 
   });
+}
 
-    // if (event.type === "blur" || event.type === keyCode 13) {
-    // }
-
-function editBody() {
-  $('#idea-body-show').on('blur keydown', function(event) {
-    if (event.type === "blur" || event.type === keyCode 13) {
-      editContent(this, { body: $(this).text(), id: $(this).data('body-id')});
+function editIdea( updatedContent) {
+  $.ajax({
+    method: "PACH",
+    url: '/api/v1/ideas/' + data.id,
+    dataType: "JSON",
+    data: {
+      idea: {
+        title: updatedContent.title,
+        body: updatedContent.body
+      }
+    },
+    success: function(data) {
+      $("#idea-" + data.id).replaceWith(renderIdea(data));
     }
   });
 }
+    // if (event.type === "blur" || event.type === keyCode 13) {
+    // }
+
+// function editBody() {
+//   $('#idea-body-show').on('blur keydown', function(event) {
+//     if (event.type === "blur" || event.type === keyCode 13) {
+//       editContent(this, { body: $(this).text(), id: $(this).data('body-id')});
+//     }
+//   });
+// }
 // edit/updateIdea
 // setAttribute("contenteditable"=false) to title and body
 // - on click: set to true
