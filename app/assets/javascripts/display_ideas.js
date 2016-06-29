@@ -5,6 +5,7 @@ $(document).ready(function() {
   updateBody();
   upvoteQuality();
   downvoteQuality();
+  searchIdeas();
 });
 
 function displayIdeas() {
@@ -54,9 +55,15 @@ function renderIdea(idea) {
         '<div class="body" data-body-id="' + id + '">'+ body +
         '</div></h5>' +
         '<p class="list-group-item-text">A <i>' + quality + '</i> idea!</p>' +
-        '<div class="btn btn-primary upvote" data-quality-id="' + id + '" data-quality="' + quality + '">Upvote</div>' +
-        '<div class="btn btn-primary downvote" data-quality-id="' + id + '" data-quality="' + quality + '">Downvote</div>' +
-        '<button class="btn btn-primary delete-idea" data-id="' + id + '">Delete</button>' +
+
+        '<button><span class="glyphicon glyphicon-thumbs-up upvote"' +
+        'data-quality-id="' + id + '" data-quality="' + quality +
+        '" aria-hidden="true"></span></button>' +
+        '<button><span class="glyphicon glyphicon-thumbs-down downvote"' +
+        'data-quality-id="' + id + '" data-quality="' + quality +
+        '" aria-hidden="true"></span></button>' + '<br>' +
+        '<button class="btn btn-primary delete-idea" data-id="' + id +
+        '">Delete</button>' +
         '</li>';
 }
 
@@ -185,5 +192,22 @@ function updateQuality(ideaId, newQuality) {
     success: function(data) {
       $("#idea-" + data.id).replaceWith(renderIdea(data));
     }
+  });
+}
+
+function searchIdeas(){
+  $('#search-text').on('keyup', function(){
+    var searchTerm = $(this).val().toLowerCase();
+
+    $(".list-group-item").each(function(_index, idea){
+      var title = $(this).children().children('.title').text().toLowerCase();
+      var body = $(this).children().children('.body').text().toLowerCase();
+
+      if (title.match(searchTerm) || body.match(searchTerm)) {
+        $(idea).show();
+      } else {
+        $(idea).hide();
+      }
+    });
   });
 }

@@ -9,7 +9,6 @@ class Api::V1::IdeasController < Api::V1::ApiController
 
    def update
     if idea_params[:quality]
-      binding.pry
       render json: Idea.update(params[:id], quality: idea_params[:quality].to_i)
     else
       render json: Idea.update(params[:id], idea_params)
