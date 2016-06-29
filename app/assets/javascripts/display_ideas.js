@@ -1,8 +1,7 @@
 $(document).ready(function() {
+  defineEvents();
   displayIdeas();
-  createSubmitEventOnForm();
 });
-
 
 function displayIdeas() {
   $.ajax({
@@ -12,6 +11,17 @@ function displayIdeas() {
     success: function(response) {
       printIdeas(response);
     }
+  });
+}
+
+function defineEvents() {
+  $("#save-idea").on('submit', function(event) {
+    event.preventDefault();
+    createIdea();
+  });
+
+  $(document).on('click', ".delete-idea", function() {
+    deleteIdea($(this).data('id'));
   });
 }
 
@@ -27,35 +37,43 @@ function renderIdea(idea) {
   var quality = idea.quality;
   var id = idea.id;
 
-  return '<li class="list-group-item">' +
+  return '<li class="list-group-item" id="idea-' + id + '">' +
         '<h4 class="list-group-item-heading">' + title + '</h4>' +
         '<p class="list-group-item-text">' + body + '</p>' +
         '<p class="list-group-item-text">A <i>' + quality + '</i> idea!</p>' +
         '<div class="btn btn-primary" id="upvote-idea">Upvote</div>' +
         '<div class="btn btn-primary" id="downvote-idea">Downvote</div>' +
-        '<div class="btn btn-primary delete-idea" data-id="' + id + '">Delete</div>' +
+        '<button class="btn btn-primary delete-idea" data-id="' + id + '">Delete</button>' +
         '</li>';
 }
 
-  function createSubmitEventOnForm() {
-    $("#save-idea").on('submit', function(event) {
-      event.preventDefault();
+function createIdea() {
+  var title = $('#IdeaTitle').val();
+  var body = $('#IdeaBody').val();
 
-    var title = $('#IdeaTitle').val();
-    var body = $('#IdeaBody').val();
-      $.ajax({
-        method: "POST",
-        url: "/api/v1/ideas",
-        dataType: "JSON",
-        data: {
-          idea: {
-            title: title,
-            body: body
-          }
-        },
-        success: function(idea){
-          $('.ideas').prepend(renderIdea(idea));
-        }
-      });
+  $.ajax({
+    method: "POST",
+    url: "/api/v1/ideas",
+    dataType: "JSON",
+    data: {
+      idea: {
+        title: title,
+        body: body
+      }
+    },
+    success: function(idea){
+      $('.ideas').prepend(renderIdea(idea));
+    }
   });
-  }
+}
+
+function deleteIdea(id) {
+  $.ajax({
+    method: "DELETE",
+    url: '/api/v1/ideas/' + id,
+    dataType: "JSON",
+    success: function(id) {
+      $('#idea-' + id).slideUp();
+    }
+  });
+}

@@ -11,9 +11,18 @@ RSpec.feature "user sees all ideas" do
       expect(page).to have_content(idea1.title)
       expect(page).to have_content(idea1.body)
       expect(page).to have_content(idea1.quality)
+
+      expect(page).to have_content(idea2.title)
+      expect(page).to have_content(idea2.body)
+      expect(page).to have_content(idea2.quality)
+
+      expect(page).to have_content(idea3.title)
+      expect(page).to have_content(idea3.body)
+      expect(page).to have_content(idea3.quality)
+
     # end
 
-    expect(page).to have_selector('h3', count: 3)
+    expect(page).to have_selector('h4', count: 3)
   end
 
   scenario "user sees most recent idea on top", js: true do
@@ -22,15 +31,15 @@ RSpec.feature "user sees all ideas" do
     visit '/'
     wait_for_ajax
 
-    within('h2:first-child') {expect(page).to have_content(idea.title)}
-    within('h2:first-child') {expect(page).to have_content(idea.body)}
+    within('#idea-' + idea.id.to_s) {expect(page).to have_content(idea.title)}
+    within('#idea-' + idea.id.to_s) {expect(page).to have_content(idea.body)}
 
     new_idea = create(:idea)
 
     visit '/'
     wait_for_ajax
 
-    within('h2:first-child') { expect(page).to have_content(new_idea.title) }
-    within('h2:first-child') { expect(page).to have_content(new_idea.body) }
+    within('#idea-' + new_idea.id.to_s) { expect(page).to have_content(new_idea.title) }
+    within('#idea-' + new_idea.id.to_s) { expect(page).to have_content(new_idea.body) }
   end
 end
