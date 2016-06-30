@@ -1,7 +1,7 @@
 $(document).ready(function() {
-  updateTitle();
   defineEvents();
   displayIdeas();
+  updateTitle();
   updateBody();
   upvoteQuality();
   downvoteQuality();
@@ -26,13 +26,9 @@ function defineEvents() {
     clearFields();
   });
 
-  $(document).on('click', ".delete-idea", function() {
+  $('.list-group').on('click', ".delete-idea", function() {
     deleteIdea($(this).data('id'));
   });
-
-  // $(document).on('click', function() {
-  //   updateIdea
-  // });
 }
 
 function printIdeas(response) {
@@ -49,10 +45,12 @@ function renderIdea(idea) {
 
   return '<li class="list-group-item" id="idea-' + id + '">' +
         '<h3 class="list-group-item-heading">' +
-        '<div class="title" data-title-id="' + id + '">' + title +
+        '<div class="title" data-title-id="' + id +
+        '" contenteditable=true>' + title +
         '</div></h3>' +
         '<h4 class="list-group-item-text">' +
-        '<div class="body" data-body-id="' + id + '">'+ body +
+        '<div class="body" data-body-id="' + id +
+        '" contenteditable=true>'+ body +
         '</div></h4><br>' +
         '<p class="list-group-item-text">' +
         'What a <b>' + quality + '</b> idea! ' +
@@ -106,7 +104,6 @@ function deleteIdea(id) {
 
 function updateTitle() {
   $('.list-group').on('click', '.title', function(event) {
-    $(this).attr('contenteditable', 'true');
     $(this).on('blur keydown', function(event) {
       if(event.type === "blur" || event.keyCode === 13) {
         updateIdea({ title: $(this).text(), id: $(this).data('title-id')});
@@ -117,7 +114,6 @@ function updateTitle() {
 
 function updateBody() {
   $('.list-group').on('click', '.body', function(event) {
-    $(this).attr('contenteditable', 'true');
     $(this).on('blur keydown', function(event) {
       if(event.type === "blur" || event.keyCode === 13) {
         updateIdea( { body: $(this).text(), id: $(this).data('body-id')});
