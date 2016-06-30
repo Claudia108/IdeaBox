@@ -48,20 +48,21 @@ function renderIdea(idea) {
   var id = idea.id;
 
   return '<li class="list-group-item" id="idea-' + id + '">' +
-        '<h4 class="list-group-item-heading">' +
+        '<h3 class="list-group-item-heading">' +
         '<div class="title" data-title-id="' + id + '">' + title +
-        '</div></h4>' +
-        '<h5 class="list-group-item-text">' +
+        '</div></h3>' +
+        '<h4 class="list-group-item-text">' +
         '<div class="body" data-body-id="' + id + '">'+ body +
-        '</div></h5>' +
-        '<p class="list-group-item-text">A <i>' + quality + '</i> idea!</p>' +
+        '</div></h4><br>' +
+        '<p class="list-group-item-text">' +
+        'What a <b>' + quality + '</b> idea! ' +
 
-        '<button><span class="glyphicon glyphicon-thumbs-up upvote"' +
+        '<a><span class="glyphicon glyphicon-thumbs-up upvote"' +
         'data-quality-id="' + id + '" data-quality="' + quality +
-        '" aria-hidden="true"></span></button>' +
-        '<button><span class="glyphicon glyphicon-thumbs-down downvote"' +
+        '" aria-hidden="true"></span>' + ' ' +
+        '<span class="glyphicon glyphicon-thumbs-down downvote"' +
         'data-quality-id="' + id + '" data-quality="' + quality +
-        '" aria-hidden="true"></span></button>' + '<br>' +
+        '" aria-hidden="true"></span></a></p>' + '<br>' +
         '<button class="btn btn-primary delete-idea" data-id="' + id +
         '">Delete</button>' +
         '</li>';
@@ -146,7 +147,6 @@ function upvoteQuality() {
   $('.list-group').on('click', '.upvote', function(event) {
     var ideaId = $(this).data('quality-id');
     var currentQuality = $(this).data('quality');
-    console.log(ideaId, currentQuality);
     var newQuality = upQuality(currentQuality);
     updateQuality(ideaId, newQuality);
   });

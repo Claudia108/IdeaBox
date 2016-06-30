@@ -11,7 +11,9 @@ RSpec.feature "user changes quality of idea" do
     within("#idea-#{idea.id}") do
       find(".upvote").click
     end
+    wait_for_ajax
 
+    expect(page).to have_current_path('/')
     expect(page).to have_content("plausible")
 
     within("#idea-#{idea.id}") do
@@ -37,6 +39,7 @@ RSpec.feature "user changes quality of idea" do
     within("#idea-#{idea.id}") do
       find(".downvote").click
     end
+    wait_for_ajax
 
     expect(page).to have_content("plausible")
 

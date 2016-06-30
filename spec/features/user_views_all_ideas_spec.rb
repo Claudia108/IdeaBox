@@ -19,8 +19,8 @@ RSpec.feature "user sees all ideas" do
     expect(page).to have_content(idea3.body)
     expect(page).to have_content(idea3.quality)
 
+    expect(page).to have_selector('h3', count: 3)
     expect(page).to have_selector('h4', count: 3)
-    expect(page).to have_selector('h5', count: 3)
   end
 
   scenario "user sees most recent idea on top", js: true do
