@@ -7,11 +7,18 @@ class Api::V1::IdeasController < Api::V1::ApiController
     render json: Idea.create(idea_params)
   end
 
+   def update
+    if idea_params[:quality]
+      render json: Idea.update(params[:id], quality: idea_params[:quality].to_i)
+    else
+      render json: Idea.update(params[:id], idea_params)
+    end
+  end
+
   def destroy
     Idea.delete(params[:id])
     render json: params[:id]
   end
-
 
   private
 
