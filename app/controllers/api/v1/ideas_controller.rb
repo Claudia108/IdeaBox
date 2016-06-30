@@ -25,5 +25,4 @@ class Api::V1::IdeasController < Api::V1::ApiController
   def idea_params
     params.require(:idea).permit(:title, :body, :quality)
   end
-
 end
