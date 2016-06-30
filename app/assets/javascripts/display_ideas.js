@@ -1,7 +1,7 @@
 $(document).ready(function() {
-  updateTitle();
   defineEvents();
   displayIdeas();
+  updateTitle();
   updateBody();
   upvoteQuality();
   downvoteQuality();
@@ -26,13 +26,9 @@ function defineEvents() {
     clearFields();
   });
 
-  $(document).on('click', ".delete-idea", function() {
+  $('.list-group').on('click', ".delete-idea", function() {
     deleteIdea($(this).data('id'));
   });
-
-  // $(document).on('click', function() {
-  //   updateIdea
-  // });
 }
 
 function printIdeas(response) {
@@ -52,8 +48,9 @@ function renderIdea(idea) {
         '<div class="title" data-title-id="' + id +
         '" contenteditable=true>' + title +
         '</div></h3>' +
-        '<h4 class="list-group-item-text" contenteditable=true>' +
-        '<div class="body" data-body-id="' + id + '">'+ body +
+        '<h4 class="list-group-item-text">' +
+        '<div class="body" data-body-id="' + id +
+        '" contenteditable=true>'+ body +
         '</div></h4><br>' +
         '<p class="list-group-item-text">' +
         'What a <b>' + quality + '</b> idea! ' +
