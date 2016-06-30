@@ -1,7 +1,7 @@
 $(document).ready(function() {
+  updateTitle();
   defineEvents();
   displayIdeas();
-  updateTitle();
   updateBody();
   upvoteQuality();
   downvoteQuality();
@@ -43,7 +43,7 @@ function printIdeas(response) {
 
 function renderIdea(idea) {
   var title = idea.title;
-  var body = idea.body;
+  var body = shorten(idea.body);
   var quality = idea.quality;
   var id = idea.id;
 
@@ -81,7 +81,7 @@ function createIdea() {
       }
     },
     success: function(idea){
-      $('.ideas').prepend(renderIdea(idea));
+      $('.list-group').prepend(renderIdea(idea));
     }
   });
 }
@@ -146,6 +146,7 @@ function upvoteQuality() {
   $('.list-group').on('click', '.upvote', function(event) {
     var ideaId = $(this).data('quality-id');
     var currentQuality = $(this).data('quality');
+    console.log(ideaId, currentQuality);
     var newQuality = upQuality(currentQuality);
     updateQuality(ideaId, newQuality);
   });
@@ -210,4 +211,13 @@ function searchIdeas(){
       }
     });
   });
+}
+
+function shorten(body) {
+  var shortened = body.substring(0, 100).split(' ').slice(0, -1).join(' ');
+  if (body.length >= 100) {
+    return shortened + ' ...';
+  } else {
+    return body;
+  }
 }
